@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+build-container:
+  stage: build
+  script:
+    ## Login to Gitlab Provided Container Registry for this project.
+    - cd vendor/client
+    - git checkout master
+    - git pull
+    - cd ../..
+    - docker info
+    - docker-compose build --pull
+  only:
+    - master
+
+deploy-target:
+  stage: deploy
+  script:
+    - docker-compose ps | grep 'Up' && docker-compose down
+    - docker-compose up -d
+  only:
+    - master

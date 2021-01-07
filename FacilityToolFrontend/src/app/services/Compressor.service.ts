@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+@Injectable({
+  providedIn: 'root',
+})
+export class CompressorService {
+  constructor() {}
+
+  /**
+   * This method is the main method incharge of compression image files before they are saved to the database
+   * @param file this is the image file to be compressed
+   */
+  compress(file: File): Observable<any> {
+    const width = 600; // For scaling relative to width
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return Observable.create((observer) => {
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.src = (ev.target as any).result;
+        (img.onload = () => {
+          const elem = document.createElement('canvas'); // Use Angular's Renderer2 method
+          const scaleFactor = width / img.width;
+          elem.width = width;
+          elem.height = img.height * scaleFactor;
+          const ctx = elem.getContext('2d') as CanvasRenderingContext2D;
+          ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
+          ctx.canvas.toBlob(
+            (blob) => {
+              observer.next(
+                new File([blob], file.name, {
+                  type: 'image/jpeg',
+                  lastModified: Date.now(),
+                })
+              );
+            },
+            'image/jpeg',
+            1
+          );
+        }),
+          (reader.onerror = (error) => observer.error(error));
+      };
+    });
+  }
+}

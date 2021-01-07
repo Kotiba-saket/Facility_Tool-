@@ -1,0 +1,13 @@
+<div>
+    <form #templateForm="ngForm">
+        <i class="fa fa-times-circle" (click)="closeDialog()"></i>
+        <div class="form-group">
+
+            <textarea #body="ngModel" [(ngModel)]="template.body" type="text" class="form-control" id="body" name="body" row="3" style="height: 500px;" required
+            placeholder="Voeg alleen de body van het bericht toe. De andere delen van het sjabloon worden automatisch toegevoegd."></textarea>
+
+
+        </div>
+        <i class="fa fa-save" (click)="addTemplate()"></i>
+    </form>
+</div>

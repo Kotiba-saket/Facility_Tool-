@@ -1,0 +1,31 @@
+<h4>{{groupName}}</h4>
+<table class="table table-striped">
+  <thead>
+    <tr >
+      <th scope="col">Nr</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor=" let user of groupUsersList; let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{user.displayName}}</td>
+      <td><a (click)="removeMember(user.azureUserId)"><i class="fa fa-minus-circle removeUserIcon"></i></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div>
+  <div>
+  <select (change)="onUserChange($event)" class="form-control user-Selector">
+    <option   selected="true" disabled="disabled">Select User</option>
+    <option  *ngFor="let user of UsersList" [value]="user.azureUserId"  > {{user.displayName}}</option>
+  </select>
+  </div>
+</div>
+
+<button *ngIf='newInnerWidth > 500' class="btnweb" (click)="addMember()" type="submit" mat-flat-button id="yes-button" [mat-dialog-close]="false">Add Member</button>
+<button *ngIf='newInnerWidth > 500' class="btnweb" mat-flat-button id="no-button" [mat-dialog-close]="false">Cancel</button>
+<button *ngIf='newInnerWidth < 500' class="btnmobile" (click)="addMember()" type="submit" mat-flat-button id="yes-button" [mat-dialog-close]="false">Add Member</button>
+<button *ngIf='newInnerWidth < 500' class="btnmobile" mat-flat-button id="no-button" [mat-dialog-close]="false">Cancel</button>

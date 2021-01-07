@@ -1,0 +1,343 @@
+.container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+    color: #af0412;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: #af0412 !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #af0412 !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #af0412 !important;
+    ;
+}
+
+.btn {
+    float: right;
+    color: #af0412;
+}
+
+.header {
+    background-color: #fffdfe9d;
+    color: #af0412;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    height: auto;
+}
+
+.example-card {
+    max-width: 100%;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+::ng-deep.mat-card-subtitle {
+    font-weight: bold;
+    float: right;
+    margin-right: 70px;
+}
+
+.group {
+    display: inline
+}
+
+.category {
+    border: 0.5px solid lightgray;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.upvote {
+    border: 0.5px solid lightgray;
+    border-radius: 8px;
+    padding: 5px;
+    margin-right: 15px;
+    margin-bottom: 4px;
+}
+
+.btn-mobile {
+    text-align: center;
+    color: white;
+    margin-left: 30%;
+    background-color: #af0412;
+}
+
+.card-view {
+    width: 100%;
+    height: 180px;
+    background-color: white;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.card-view .img {
+    width: 40%;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+}
+
+.card-view .img img {
+    width: 100%;
+    height: 80%;
+    display: block;
+}
+
+.card-view .description {
+    width: 60%;
+    height: 100%;
+    padding-top: 5%;
+    padding-left: 3%;
+}
+
+.card-view .description .loc {
+    font-size: 13px;
+    color: #939598;
+}
+
+.dot-web {
+    height: 11px;
+    width: 11px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.dot-mobile {
+    height: 11px;
+    width: 11px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 4px;
+}
+
+.card-head {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+::ng-deep.mat-tab-label {
+    color: #af0412;
+    font-weight: bold;
+}
+
+::ng-deep .mat-ink-bar {
+    background-color: #af0412 !important;
+}
+
+i {
+    color: #af0412;
+    font-size: 35px;
+    right: 0;
+}
+
+.mat-menu-item {
+    color: black !important;
+    font-weight: bold;
+}
+
+button.mat-menu-item {
+    background-color: white;
+}
+
+button.mat-menu-item:hover {
+    background-color: #af0412;
+    color: #fff !important;
+}
+
+button.mat-menu-item::selection {
+    border: none;
+}
+
+.fixed-bottom {
+    float: right;
+}
+
+.mat-menu-content {
+    width: 100%;
+    background-color: #af0412;
+}
+
+.EmptyImageMobile {
+    width: 200px;
+}
+
+.detailsIcon {
+    color: #af0412;
+    font-size: 20px;
+}
+
+.export {
+    height: 26px;
+    margin-bottom: 2%;
+    margin-right: 10px;
+}
+
+.exportIcon {
+    top: 50%;
+    left: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    display: block;
+    margin-right: 20px;
+    font-size: 25px;
+}
+
+.header-less-tabs {
+    display: none;
+}
+
+.card-view-taken {
+    width: 100%;
+    height: 150px;
+    background-color: white;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.sortPile {
+    float: right;
+    margin-right: 30px;
+    font-size: 15px;
+}
+
+::ng-deep .mat-select-value {
+    font-weight: bold;
+    padding-left: 10px;
+    color: #af0412;
+}
+
+.dropsown {
+    width: 200px;
+    margin-left: 10px;
+}
+
+.dropDownLable {
+    font-weight: bold;
+}
+
+
+/* Laptop*/
+
+@media only screen and (min-width: 1224px) {
+    .plusIcon {
+        float: right;
+        margin-right: 15%;
+    }
+}
+
+
+/* Ipad*/
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+    .plusIcon {
+        float: right;
+        margin-right: 15%;
+    }
+}
+
+
+/* Large screens ----------- */
+
+@media only screen and (min-width: 1824px) {
+    .plusIcon {
+        float: right;
+        margin-right: 25%;
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+    .export {
+        height: 0px;
+        margin-bottom: 2%;
+        margin-right: 15%;
+    }
+}
+
+@media only screen and (min-width: 1224px) {
+    .export {
+        height: 0px;
+        margin-bottom: 2%;
+        margin-right: 15%;
+    }
+}
+
+
+/* Large screens ----------- */
+
+@media only screen and (min-width: 1824px) {
+    .export {
+        height: 0px;
+        margin-bottom: 2%;
+        margin-right: 25%;
+    }
+}
+
+.exportIcon {
+    font-size: 25px;
+    float: right;
+}
+
+.ExportIcon-mobile {
+    float: right;
+    font-size: 25px;
+}
+
+.ExportIcon-mobile {
+    margin-bottom: 3%;
+}
+
+.parentRow {
+    background-color: rgb(255, 255, 255);
+    border-radius: 2px;
+    margin-bottom: 10px;
+    margin: .5px;
+    margin-bottom: 0.5px;
+    margin-bottom: 10px;
+    padding-left: 3px;
+    padding-top: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.detailsIcon {
+    margin-left: 10px;
+}

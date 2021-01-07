@@ -1,0 +1,38 @@
+<div *ngIf="isLoaded">
+    <div *ngIf="isReport">
+        <form #templateForm="ngForm">
+            <i class="fa fa-times-circle" (click)="closeDialog()"></i>
+            <div class="form-group">
+                <h5 style="font-size: x-small; margin-bottom: 5px;">E-mail template Facility Tool</h5>
+                <br>
+                <p id="template">{{template.firmName}}</p> <br><br>
+                {{template.body}} <br><br>
+                <p id="hyperlink">Hyperlink: <u>{{meldingUrl}}?token={{idToken}}</u></p> <br><br>
+                {{template.signature}}
+            </div>
+
+            <br>
+        </form>
+        <div class="sendMail">
+          <button (click)="reportSendMail(); closeDialog()" *ngIf="assignToFirmInformation" name="selectedFirm" id="selectedFirm" ngDefaultControl class="btn">VERZENDEN</button>
+      </div>
+    </div>
+    <div *ngIf="!isReport">
+      <form #templateForm="ngForm">
+        <i class="fa fa-times-circle" (click)="closeDialog()"></i>
+        <div class="form-group">
+            <h5 style="font-size: x-small; margin-bottom: 5px;">E-mail template Facility Tool</h5>
+            <br>
+            <p id="template">{{template.firmName}}</p> <br><br>
+            {{template.body}} <br><br>
+            <p id="hyperlink">Hyperlink: <u>{{taakUrl}}?token={{idToken}}</u></p> <br><br>
+            {{template.signature}}
+        </div>
+
+        <br>
+    </form>
+    <div class="sendMail">
+      <button (click)="orderSendMail(); closeDialog()" *ngIf="assignToFirmInformation" name="selectedFirm" id="selectedFirm" ngDefaultControl class="btn">VERZENDEN</button>
+  </div>
+    </div>
+</div>

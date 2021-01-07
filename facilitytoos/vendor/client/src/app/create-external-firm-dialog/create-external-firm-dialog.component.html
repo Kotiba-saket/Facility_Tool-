@@ -1,0 +1,52 @@
+<div *ngIf="!editFirm">
+  <h2 class="headerText">Add External Firm</h2>
+  <form #externalFirmForm="ngForm">
+    <div class="form-group">
+      <div class="form-group">
+      <label class="name-lbl" for="Name">Name</label>
+      <input #displayName="ngModel" tabindex="-1" name="displayName" id="displayName" [(ngModel)]="newExternalFirm.displayName" placeholder="FIrm Name"  class="form-control " type="text" required/>
+      <div class="alert alert-danger" *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">Name is required</div>
+      </div>
+      <div class="form-group">
+      <label class="email-lbl" for="Email">Email</label>
+    <input #email="ngModel" name="email" tabindex="-1" id="email"  placeholder="Email" [(ngModel)]="newExternalFirm.email" [email]="newExternalFirm.email!==''"  class="form-control email-input" type="email" required />
+    <div class="alert alert-danger" *ngIf="email.errors && email.errors?.required && email.touched">Email is required</div>
+    <div class="alert alert-danger" *ngIf="email.errors && email.errors?.email && email.touched">Valid email is required</div>
+      </div>
+      <div class="form-group">
+    <label class="telefoon-lbl" for="GSM">GSM Nr</label>
+    <input #telefoonNr="ngModel" tabindex="-1" name="telefoonNr" id="telefoonNr" placeholder="Telephone Nr" [(ngModel)]="newExternalFirm.telefonNr"  class="form-control " type="text"  required/>
+    <div class="alert alert-danger" *ngIf="telefoonNr.invalid && (telefoonNr.dirty || telefoonNr.touched)">Telephone Nr is required</div>
+      </div>
+  </div>
+   <button class="btn" (click)="addFirm()" type="submit" [disabled]="!externalFirmForm.valid" mat-flat-button id="yes-button" [mat-dialog-close]="false">Create</button>
+   <button class="btn" mat-flat-button id="no-button"   [mat-dialog-close]="false">Cancel</button>
+</form>
+</div>
+
+<div *ngIf="editFirm">
+  <h2 class="headerText">Edit External Firm</h2>
+  <form #externalFirmForm="ngForm">
+    <div class="form-group">
+      <div class="form-group">
+      <label class="name-lbl" for="Name">Name</label>
+      <input #displayName="ngModel" name="displayName" id="displayName" [(ngModel)]="externalFirm.displayName" placeholder="Firm Name"  class="form-control " type="text" required/>
+      <div class="alert alert-danger" *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">Name is required</div>
+      </div>
+      <div class="form-group">
+      <label class="email-lbl" for="Email">Email</label>
+    <input #email="ngModel" name="email" placeholder="Email"  id="email" [(ngModel)]="externalFirm.email" [email]="externalFirm.email!==''"  class="form-control email-input" type="email" required />
+    <div class="alert alert-danger" *ngIf="email.errors && email.errors?.required && email.touched">Email is required</div>
+    <div class="alert alert-danger" *ngIf="email.errors && email.errors?.email && email.touched">Valid email is required</div>
+      </div>
+      <div class="form-group">
+    <label class="telefoon-lbl" for="GSM">GSM Nr</label>
+    <input #telefoonNr="ngModel" name="telefoonNr" id="telefoonNr" placeholder="Telephone Nr" [(ngModel)]="externalFirm.telefonNr"  class="form-control " type="text"  required/>
+    <div class="alert alert-danger" *ngIf="telefoonNr.invalid && (telefoonNr.dirty || telefoonNr.touched)">location is required</div>
+      </div>
+  </div>
+   <button class="btn" (click)="updateFirm(externalFirm.id)" type="submit" mat-flat-button id="yes-button" [disabled]="!externalFirmForm.valid" [mat-dialog-close]="false">Update</button>
+   <button class="btn" mat-flat-button id="no-button" [mat-dialog-close]="false">Cancel</button>
+
+</form>
+</div>

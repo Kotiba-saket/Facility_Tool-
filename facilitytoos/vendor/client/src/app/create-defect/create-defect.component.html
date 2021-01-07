@@ -1,0 +1,76 @@
+<div class="contailer">
+    <div class="jumbotron">
+        <h2>Create defect</h2>
+        <form #reportForm="ngForm">
+            <div class="form-row">
+
+                <div class="form-group col-md-4">
+                    <label for="campus">Campus</label>
+                    <select #campus="ngModel" [(ngModel)]="report.campus" name="campus" id="campus" class="form-control" required (change)="onCampusChange($event)">
+                      <option selected disabled>kiezen...</option>
+                      <option *ngFor="let key of campusenOption"  [value]="key" [label]="key">{{key}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="campus.invalid && (campus.dirty || campus.touched)">Campus is verplicht.</div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="floor">Verdieping</label>
+                    <select #floor="ngModel" [(ngModel)]="report.floor" name="floor" id="floor" class="form-control" required (change)="onEtageChange($event)">
+                      <option selected disabled>kiezen...</option>
+                      <option *ngFor="let key of floors"  [value]="key">{{key}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="floor.invalid && (floor.dirty || floor.touched)">Verdieping is verplicht.</div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="locatie">Lokaal</label>
+                    <select #location="ngModel" [(ngModel)]="report.location" name="locatie" id="locatie" class="form-control" required>
+                      <option selected disabled>kiezen...</option>
+                      <option *ngFor="let key of locaties"  [value]="key">{{key}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="location.invalid && (location.dirty || location.touched)">Lokaal is verplicht.</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="department">Departement</label>
+                    <select #department="ngModel" [(ngModel)]="report.categoryDepartment" id="department" name="department" class="form-control" required (change)="onDepartmentChange($event)" placeholder="kies een afdeling">
+                      <option selected disabled>kiezen...</option>
+                      <option  *ngFor="let d of departments" [value]="d">{{d}}</option>
+
+                     </select>
+                    <div class="alert alert-danger" *ngIf="department.invalid && (department.dirty || department.touched)">Departement is verplicht.</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="categorie">Categorie</label>
+                    <select #category="ngModel" [(ngModel)]="report.category" id="categorie" name="categorie" class="form-control" required placeholder="kies een afdeling">
+                      <option selected disabled>kiezen...</option>
+                        <option  *ngFor="let c of Categories" [value]="c">{{c}}</option>
+
+                  </select>
+                    <div class="alert alert-danger" *ngIf="category.invalid && (category.dirty || category.touched)">Categorie is verplicht.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title">Titel</label>
+                <input #title="ngModel" [(ngModel)]="report.title" type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+                <div class="alert alert-danger" *ngIf="title.invalid && (title.dirty || title.touched)">Titel is verplicht.</div>
+            </div>
+            <div class="form-group">
+                <label for="beschrijving">Beschrijving</label>
+                <textarea #description="ngModel" [(ngModel)]="report.description" class="form-control" id="beschrijving" name="beschrijving" rows="3" required></textarea>
+                <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">Beschrijving is verplicht.</div>
+            </div>
+
+            <div class="input-group mb-4 ">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" (change)="process($event)">
+
+                    <label class="custom-file-label" for="image">{{fileName}}</label>
+                </div>
+            </div>
+            <!-- <input #reporterId="ngModel" [(ngModel)]="report.reporterId" type="text" class="form-control" id="reporterId" name="reporterId" [value]="userid">
+            <input #reporterName="ngModel" [(ngModel)]="report.reporterName" type="text" class="form-control" id="reporterName" name="reporterName" [value]="userName"> -->
+            <button (click)="createReport()" class="btn" [disabled]="!reportForm.valid">Indienen</button>
+        </form>
+    </div>
+</div>

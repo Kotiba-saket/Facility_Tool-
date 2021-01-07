@@ -1,0 +1,13 @@
+.lable {
+    color: rgb(206, 0, 0);
+}
+
+.jumbotron {
+    background-color: white;
+}
+
+.btn {
+    float: right;
+    color: white;
+    background-color: #af0412;
+}

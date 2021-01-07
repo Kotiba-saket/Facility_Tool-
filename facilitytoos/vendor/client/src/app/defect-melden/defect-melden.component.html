@@ -1,0 +1,118 @@
+<div class="form-group searchGroup">
+    <legend>controleer als uw defect is al bestaat....</legend>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field>
+                <mat-label>Campus</mat-label>
+                <mat-select (selectionChange)='onCampusChange($event)' selectedIndex='0'>
+                    <mat-option *ngFor="let c of campusenOption" [value]="c">
+                        {{c}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <mat-label>Verdieping</mat-label>
+                <mat-select (selectionChange)='onEtageChange($event)'>
+                    <mat-option value="ALL">All</mat-option>
+                    <mat-option *ngFor="let f of floors" [value]="f">
+                        {{f}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field>
+                <mat-label>Lokaal</mat-label>
+                <mat-select (selectionChange)='onLocatieChange($event)'>
+                    <mat-option value="ALL">All</mat-option>
+                    <mat-option *ngFor="let l of locaties" [value]="l">
+                        {{l}}
+                    </mat-option>
+                </mat-select>
+
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="dropsown">
+                    <mat-label class="dropDownLable">Order By ....</mat-label>
+                    <mat-select [(ngModel)]="sortBy" name="col">
+                        <mat-option *ngFor="let col of columnsToSort" [value]="col.value" (click)="SortBy()">
+                            {{col.viewValue}}
+                            <i class="fas fa-arrow-up sortPile" *ngIf="direction === 'asc'"></i>
+                            <i class="fas fa-arrow-down sortPile" *ngIf="direction === 'desc'"></i>
+
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<hr>
+<mat-grid-list cols="2" rowHeight="3:1" *ngIf='newInnerWidth >  500'>
+    <mat-grid-tile class="grid" *ngFor='let report of filterdReports | filter:searchText  | sortBy: direction:sortBy '>
+        <div class=' card-view  card-view-web' [routerLink]="['/meldingen/detail', report.id]">
+
+            <section class="img">
+                <img *ngIf='report.bytes=== null ' class="col-md-6" src="../../assets/images/default.jpg" alt="image">
+                <img *ngIf='report.bytes !== null ' class="col-md-6" src="data:image/jpeg;base64,{{report.bytes}}" alt="image">
+            </section>
+
+            <section class="description">
+                <div class='card-head '>
+                    <h5>{{report.title}}</h5>
+                    <span class='dot-mobile ' [ngStyle]="{'background-color': setPriorityColor(report.priority)}"></span>
+                </div>
+                <p class='loc '>{{report.campus}} {{report.location}}</p>
+                <p>Status: {{report.status}}</p>
+                <label class="category">{{report.category}}</label> &nbsp;
+                <label>{{report.upVote}}</label>
+            </section>
+        </div>
+    </mat-grid-tile>
+
+</mat-grid-list>
+<!-- Alleen op mobile -->
+
+<div [hidden]='newInnerWidth >  500 || !isReportLoaded'>
+    <div class="header" *ngIf='filterdReports !== null'>
+        <p>Alle meldingen</p>
+    </div>
+
+    <div *ngFor='let report of filterdReports | filter:searchText  | sortBy: direction:sortBy ' class='card-view' [routerLink]="['/meldingen/detail', report.id]">
+
+        <section class="img">
+            <img *ngIf='report.bytes=== null ' class="col-md-6" src="../../assets/images/default.jpg" alt="image">
+            <img *ngIf='report.bytes !== null ' class="col-md-6" src="data:image/jpeg;base64,{{report.bytes}}" alt="image">
+        </section>
+
+        <section class="description">
+            <div class='card-head '>
+                <h5>{{(report.title.length > 18 ) ? (report.title | slice:0:18) + '.. ' : (report.title)}}</h5>
+                <span class='dot-mobile ' [ngStyle]="{'background-color': setPriorityColor(report.priority)}"></span>
+            </div>
+            <p class='loc '>{{report.campus}} {{report.location}}</p>
+            <p>Status: {{(report.status.length > 10 ) ? (report.status | slice:0:14) + '.. ' : (report.status)}}</p>
+            <label class="category">{{report.category}}</label> &nbsp;
+            <label>{{report.upVote}}</label>
+        </section>
+    </div>
+
+</div>
+
+
+
+
+<div *ngIf='filterdReports === null'>
+    <div class="header-mobile container">
+        <p> Er zijn geen zoek resultaten </p>
+        <img class="EmptyImageMobile" src="../../assets/images/empty.png" alt="image" />
+    </div>
+
+</div>
+<button mat-button class="btn-mobile" routerLink='/meldingen/createDefect'>Defect niet in de lijst</button>

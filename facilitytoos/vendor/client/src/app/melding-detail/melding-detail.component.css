@@ -1,0 +1,188 @@
+/* Desktop */
+
+.desktop {
+    min-height: 620px;
+    margin-top: 60px;
+}
+
+#general {
+    border-right: 1px solid rgba(0, 0, 0, .12);
+}
+
+#info-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#category {
+    border: 0.5px solid gray;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+#priority {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#priority p {
+    padding: 0;
+    margin: 0;
+}
+
+.dot {
+    height: 11px;
+    width: 11px;
+    background-color: #af0412;
+    border-radius: 50%;
+    display: block;
+    margin-left: 7px;
+}
+
+#info-bottom {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.material-icons {
+    vertical-align: middle;
+    font-size: 17px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+#info-bottom-user p {
+    display: inline-block;
+    font-size: 11px;
+}
+
+.status {
+    background-color: rgba(175, 4, 18, 0.2);
+    padding: 7px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.status p {
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+mat-tab-group {
+    height: auto;
+}
+
+#lblTitle {
+    margin-top: 10px;
+}
+
+#confirm {
+    background-color: #af0412;
+    color: white;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#photo {
+    border-left: 1px solid rgba(0, 0, 0, .12);
+}
+
+#photo .btn {
+    display: block;
+    width: 100%;
+    background-color: #af0412;
+    color: white;
+}
+
+#img-web {
+    width: 100%;
+    height: 250px;
+    margin-top: 10px;
+}
+
+
+/* Mobile */
+
+main {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+}
+
+.info-mobile {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    width: 100%;
+}
+
+.info-mobile h4 {
+    color: white;
+}
+
+.info-mobile p {
+    padding: 0;
+    margin: 0;
+    color: lightgray;
+    font-size: 14px;
+}
+
+#info-bottom-mobile {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#tab-mobile {
+    margin: auto;
+}
+
+#return {
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    color: white;
+    background-color: #af0412;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.plusIcon-mobile {
+    font-size: 25px;
+    float: right;
+}
+
+.plusIcon {
+    right: 0;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.plusIcon:hover {
+    opacity: 0.80;
+}
+
+.cancleIcon-mobile {
+    color: #af0412;
+    font-size: 25px;
+}
+
+#cancel-btn-mobile {
+    margin: 0;
+    padding: 0;
+    background-color: #af0412;
+    border: 0;
+    color: white;
+    border-radius: 50%;
+    font-size: 17px;
+}

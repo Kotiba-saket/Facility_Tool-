@@ -1,0 +1,293 @@
+<div class="container" *ngIf='isLoaded'>
+    <!-- Desktop -->
+    <div class="row desktop" [hidden]='newInnerWidth < 500'>
+        <!-- Algemeen -->
+        <div id='general' class="col-4">
+            <h4>{{order.title}}</h4>
+            <p>{{order.campus}} {{order.location}}</p>
+
+            <div id='info-top'>
+                <span id='category'>{{order.category}}</span>
+            </div>
+
+            <div id="info-bottom">
+                <div class="info-bottom-user">
+                    <p><span class="material-icons">account_circle</span>{{order.requesterName}}</p>
+                    <p><span class="material-icons">alarm</span>{{order.createdOn}}</p>
+
+                </div>
+                <button class="btn-aanuleren col-xs-8" (click)="onCancleOrder()">Annuleren</button>
+            </div>
+
+            <div *ngFor='let s of order.statusHistory.reverse()' class="status">
+                <h5>Statuswijziging</h5>
+                <p>{{s}}</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="col-4">
+            <mat-tab-group class="mat-tab-web" #tabGroup (selectedTabChange)="handleMatTabChange($event)" [selectedIndex]='selectedIndex'>
+                <mat-tab label='Beschrijving'>
+                    <p class='mt-2'>{{order.description}}</p>
+                </mat-tab>
+                <mat-tab label='Reacties'></mat-tab>
+
+                <mat-tab label='Wijzigen'>
+                    <form #updateForm='ngForm'>
+                        <div class="form-group">
+                            <label id='title' for="title">Titel</label>
+                            <input #title="ngModel" [(ngModel)]="order.title" type="text" class="form-control" id="title" name="title" required/>
+                            <div class="alert alert-danger" *ngIf="title.invalid && (title.dirty || title.touched)">Title is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Beschrijving</label>
+                            <textarea #description="ngModel" [(ngModel)]="order.description" type="text" class="form-control" id="description" name="description" row="3" required></textarea>
+                            <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="campus col-md-4">Campus</label>
+                            <select #campus="ngModel" [(ngModel)]="order.campus" name="campus" id="campus" class="form-control" required (change)="onCampusChange($event)">
+                               <option *ngFor="let key of campusenOption"  [value]="key" [label]="key">{{key}}</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="floor">Etage</label>
+                            <select #floor="ngModel" [(ngModel)]="order.floor" id="floor" name="floor" class="form-control" required (change)="onEtageChange($event)">
+                                <option  *ngFor="let f of floors" [value]="f">{{f}}</option>
+                            </select>
+                            <div class="alert alert-danger" *ngIf="floor.invalid && (floor.dirty || floor.touched)">Etage is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="location col-md-7">Locatie</label>
+                            <select #location="ngModel" [(ngModel)]="order.location" id="location" name="location" class="form-control" required>
+                              <option  *ngFor="let l of locaties" [value]="l">{{l}}</option>
+                          </select>
+                            <div class="alert alert-danger" *ngIf="location.invalid && (location.dirty || location.touched)">location is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date col-md-7">Datum</label>
+                            <input #date="ngModel" [(ngModel)]="order.date" type="date" class="form-control" id="date" name="date" required/>
+                            <div class="alert alert-danger" *ngIf="date.invalid && (date.dirty || date.touched)">Date is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time,e col-md-7">Tijd</label>
+                            <input #time="ngModel" [(ngModel)]="order.time" type="time" class="form-control" id="time" name="time" required/>
+                            <div class="alert alert-danger" *ngIf="time.invalid && (time.dirty || time.touched)">Time is required</div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="department">Department</label>
+                                <select #department="ngModel" [(ngModel)]="order.categoryDepartment" id="department" name="department" class="form-control" required (change)="onDepartmentChange($event)" placeholder="kies een afdeling">
+                        <option selected disabled>kiezen...</option>
+                        <option  *ngFor="let d of departments" [value]="d">{{d}}</option>
+
+                       </select>
+                                <div class="alert alert-danger" *ngIf="department.invalid && (department.dirty || department.touched)">Department is required</div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="categorie">Categorie</label>
+                                <select #category="ngModel" [(ngModel)]="order.category" id="categorie" name="categorie" class="form-control" required placeholder="kies een afdeling">
+                        <option selected disabled>kiezen...</option>
+                          <option  *ngFor="let c of Categories" [value]="c">{{c}}</option>
+
+                    </select>
+                                <div class="alert alert-danger" *ngIf="category.invalid && (category.dirty || category.touched)">Categorie is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status,e col-md-7">Status</label>
+                            <input #status="ngModel" [(ngModel)]="order.status" (change)="onStatusChange($event.target.value)" type="text" class="form-control" id="status" name="status" readonly/>
+                            <div class="alert alert-danger" *ngIf="status.invalid && (status.dirty || status.touched)">Status is required</div>
+                        </div>
+
+                        <button id='confirm' (click)="updateOrder()" class="btn" [disabled]="order.requesterId !== LogedInUser">UPDATEN</button>
+                    </form>
+                </mat-tab>
+
+                <mat-tab *ngIf="authService.isAdmin || authService.isLogistiekeCoordinator || authService.isFacilitaireCoordinator" label='Toewijzen'>
+                    <select (change)="onChange($event)" name="employee" id="employee" class="form-control mt-2">
+                      <option selected="true" disabled="disabled">Choose Employee</option>
+                      <option *ngFor="let employee of employeesList" [value]="employee.azureUserId" [label]="employee.displayName">{{employee.displayName}}</option>
+                  </select>
+
+                    <button id='confirm' class="btn mt-2" (click)="getSelectedAssignedUserInformation()">Assign Employee</button>
+                </mat-tab>
+
+                <mat-tab *ngIf="authService.isAdmin || authService.isLogistiekeMedewerker " label='Statussen'>
+                    <p class='m-0 pt-1 pb-1'>Status wijzigen</p>
+
+                    <form #updateForm="ngForm" class='mb-1'>
+                        <select #status="ngModel" [(ngModel)]="order.status" id="status" name="status" class="form-control" required>
+                          <option  *ngFor="let s of statusenOption" [value]="s">{{s}}</option>
+                          <div class="alert alert-danger" *ngIf="status.invalid && (status.dirty || status.touched)">Status is required</div>
+                      </select>
+
+                        <button id='confirm' (click)="updateOrder()" class="btn mt-2">UPDATEN</button>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div id="return" (click)='goBack()'>
+            <i class="fa fa-undo m-2" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <!-- Mobile -->
+    <div class="row" [hidden]='newInnerWidth >= 500'>
+
+        <!-- Algemeen foto -->
+        <main style="background-image: url('../../assets/images/detail1.jpg')" alt="image">
+            <div class="info-mobile">
+                <h4>{{order.title}}</h4>
+                <p>{{order.campus}} {{order.location}}</p>
+            </div>
+        </main>
+
+        <div id='info-top' class='p-3'>
+            <span id='category'>{{order.category}}</span>
+        </div>
+
+        <div id="info-bottom-mobile" class='p-3'>
+            <div class="info-bottom-user">
+                <p><span class="material-icons">account_circle</span>{{order.requesterName}}</p>
+                <p><span class="material-icons">alarm</span>{{order.createdOn}}</p>
+            </div>
+
+            <div style="width: 150px;">
+
+                <mat-icon class="cancleIcon-mobile" (click)="onCancleOrder()">cancel</mat-icon>
+            </div>
+
+        </div>
+
+        <div id="tab-mobile" class="col-11">
+            <mat-tab-group #tabGroup2 (selectedTabChange)="handleMatTabChange($event)" [selectedIndex]='selectedIndex'>
+                <mat-tab label='Beschrijving'>
+                    <p class='mt-2'>{{order.description}}</p>
+                </mat-tab>
+                <mat-tab label='Reacties'></mat-tab>
+
+                <mat-tab label='Wijzigen'>
+                    <form #updateForm='ngForm'>
+                        <div class="form-group">
+                            <label id='lblTitle' for="title">Titel</label>
+                            <input #title="ngModel" [(ngModel)]="order.title" type="text" class="form-control" id="title" name="title" required/>
+                            <div class="alert alert-danger" *ngIf="title.invalid && (title.dirty || title.touched)">Title is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Beschrijving</label>
+                            <textarea #description="ngModel" [(ngModel)]="order.description" type="text" class="form-control" id="description" name="description" row="3" required></textarea>
+                            <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="campus col-md-4">Campus</label>
+                            <select #campus="ngModel" [(ngModel)]="order.campus" name="campus" id="campus" class="form-control" required (change)="onCampusChange($event)">
+                                 <option *ngFor="let key of campusenOption"  [value]="key" [label]="key">{{key}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="floor">Etage</label>
+                            <select #floor="ngModel" [(ngModel)]="order.floor" id="floor" name="floor" class="form-control" required (change)="onEtageChange($event)">
+                                  <option  *ngFor="let f of floors" [value]="f">{{f}}</option>
+                              </select>
+                            <div class="alert alert-danger" *ngIf="floor.invalid && (floor.dirty || floor.touched)">Etage is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="location col-md-7">Locatie</label>
+                            <select #location="ngModel" [(ngModel)]="order.location" id="location" name="location" class="form-control" required>
+                            <option  *ngFor="let l of locaties" [value]="l">{{l}}</option>
+                        </select>
+                            <div class="alert alert-danger" *ngIf="location.invalid && (location.dirty || location.touched)">location is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date col-md-7">Datum</label>
+                            <input #date="ngModel" [(ngModel)]="order.date" type="date" class="form-control" id="date" name="date" required/>
+                            <div class="alert alert-danger" *ngIf="date.invalid && (date.dirty || date.touched)">Date is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time,e col-md-7">Tijd</label>
+                            <input #time="ngModel" [(ngModel)]="order.time" type="time" class="form-control" id="time" name="time" required/>
+                            <div class="alert alert-danger" *ngIf="time.invalid && (time.dirty || time.touched)">Time is required</div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="department">Department</label>
+                                <select #department="ngModel" [(ngModel)]="order.categoryDepartment" id="department" name="department" class="form-control" required (change)="onDepartmentChange($event)" placeholder="kies een afdeling">
+                      <option selected disabled>kiezen...</option>
+                      <option  *ngFor="let d of departments" [value]="d">{{d}}</option>
+
+                     </select>
+                                <div class="alert alert-danger" *ngIf="department.invalid && (department.dirty || department.touched)">Department is required</div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="categorie">Categorie</label>
+                                <select #category="ngModel" [(ngModel)]="order.category" id="categorie" name="categorie" class="form-control" required placeholder="kies een afdeling">
+                      <option selected disabled>kiezen...</option>
+                        <option  *ngFor="let c of Categories" [value]="c">{{c}}</option>
+
+                  </select>
+                                <div class="alert alert-danger" *ngIf="category.invalid && (category.dirty || category.touched)">Categorie is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status,e col-md-7">Status</label>
+                            <input #status="ngModel" [(ngModel)]="order.status" (change)="onStatusChange($event.target.value)" type="text" class="form-control" id="status" name="status" readonly/>
+                            <div class="alert alert-danger" *ngIf="status.invalid && (status.dirty || status.touched)">Status is required</div>
+                        </div>
+
+
+                        <button id='confirm' (click)="updateOrder()" class="btn">UPDATEN</button>
+                    </form>
+                </mat-tab>
+
+                <mat-tab *ngIf="authService.isAdmin || authService.isLogistiekeCoordinator" label='Toewijzen'>
+                    <select (change)="onChange($event)" name="employee" id="employee" class="form-control mt-2">
+                  <option selected="true" disabled="disabled">Choose Employee</option>
+                  <option *ngFor="let employee of employeesList" [value]="employee.azureUserId" [label]="employee.displayName">{{employee.displayName}}</option>
+              </select>
+
+                    <button id='confirm' class="btn mt-2" (click)="getSelectedAssignedUserInformation()">Assign Employee</button>
+                </mat-tab>
+
+                <mat-tab *ngIf="authService.isAdmin || authService.isLogistiekeCoordinator" label='Statussen'>
+
+                    <p class='m-0 pt-1 pb-1'>Status wijzigen</p>
+
+                    <form #updateForm="ngForm" class='mb-1'>
+                        <select #status="ngModel" [(ngModel)]="order.status" id="status" name="status" class="form-control" required>
+                           <option  *ngFor="let s of statusenOption" [value]="s">{{s}}</option>
+                             <!-- <div class="alert alert-danger" *ngIf="status.invalid && (status.dirty || status.touched)">Categorie is required</div> -->
+                        </select>
+                        <br/>
+                        <button (click)="updateOrder()" id='confirm' class="btn mt-2">UPDATEN</button>
+                    </form>
+
+                    <div *ngFor='let s of order.statusHistory' class="status mb-1">
+                        <h5>Statuswijziging</h5>
+                        <p>{{s}}</p>
+                    </div>
+                    <span class="mb-3 d-block"></span>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <div id="return" (click)='goBack()'>
+            <i class="fa fa-undo m-2" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div>
+  <div class="content-cotainer">
+    <h5>Add Contact</h5>
+    <div><i (click)="closeDialog()" class="fas fa-window-close"></i><span></span></div>
+    <form #contactForm="ngForm">
+      <div class="form-group">
+        <label id='department' for="department">Department</label>
+        <input #department="ngModel" [(ngModel)]="contact.department" type="text" class="form-control" id="department" name="department" required/>
+        <div class="alert alert-danger" *ngIf="department.invalid && (department.dirty || department.touched)">Department is required</div>
+      </div>
+
+      <div class="form-group">
+          <label id='name' for="name">Naam</label>
+          <input #name="ngModel" [(ngModel)]="contact.name" type="text" class="form-control" id="name" name="name" required/>
+          <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">Name is required</div>
+      </div>
+
+      <div class="form-group">
+          <label for="description col-md-7">Beschrijving(positie)</label>
+          <input #description="ngModel" [(ngModel)]="contact.description" type="text" class="form-control" id="description" name="description" required/>
+          <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</div>
+      </div>
+
+      <div class="form-group">
+          <label for="email col-md-7">Email</label>
+          <input #email="ngModel" [(ngModel)]="contact.email" type="text" class="form-control" id="email" name="email" required/>
+          <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">Email is required</div>
+      </div>
+
+      <div class="form-group">
+          <label for="telephone col-md-7">Telefoon</label>
+          <input #telephone="ngModel" [(ngModel)]="contact.telephone" type="text" class="form-control" id="telephone" name="telephone" required/>
+          <div class="alert alert-danger" *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">Telephone is required</div>
+      </div>
+
+      <div class="form-group">
+          <label for="mobile col-md-7">Mobile</label>
+          <input #mobile="ngModel" [(ngModel)]="contact.mobile" type="text" class="form-control" id="mobile" name="mobile" required/>
+          <div class="alert alert-danger" *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">Mobile is required</div>
+      </div>
+
+      <button id='confirm' (click)="addContact()" class="btn" [disabled]="!contactForm.valid">ADD</button>
+      <button id='cancel' (click)="closeDialog()" class="btn">CANCEL</button>
+  </form>
+  </div>
+
+
+
+</div>

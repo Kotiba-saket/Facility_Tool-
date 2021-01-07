@@ -1,0 +1,297 @@
+<mat-tab-group [hidden]='newInnerWidth <  500' #tabGroup (selectedTabChange)="handleMatTabChange($event)">
+    <mat-tab label="Defecten">
+
+        <div *ngIf='newInnerWidth >  500' class="header">
+            <h2 class="headerText">Alle gemelde defecten</h2>
+        </div>
+
+        <div class="export">
+            <i data-toggle="tooltip" data-placement="top" title="Export Data" class="fa fa-download exportIcon" (click)="exportDefecten()"></i>
+        </div>
+
+        <div class="mat-elevation-z8 mb-3 container">
+            <br/>
+            <mat-table #table matTableFilter [dataSource]="defectDataSource" [exampleEntity]="defectFilterEntity" [filterType]="filterType">
+
+                <!-- Title Column -->
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Defect" [(ngModel)]="defectFilterEntity.title">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e">{{e.title}}</mat-cell>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Categorie" [(ngModel)]="defectFilterEntity.category">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e">{{e.category}}</mat-cell>
+                </ng-container>
+
+                <!-- Campus Column -->
+                <ng-container matColumnDef="campus">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Campus" [(ngModel)]="defectFilterEntity.campus">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e">{{e.campus}}</mat-cell>
+                </ng-container>
+
+                <!-- Location Column -->
+                <ng-container matColumnDef="location">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Location" [(ngModel)]="defectFilterEntity.location">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e">{{e.location}}</mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Status" [(ngModel)]="defectFilterEntity.status">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e">{{e.status}}</mat-cell>
+                </ng-container>
+
+                <!-- Priority Column -->
+                <ng-container matColumnDef="priority">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Priority" [(ngModel)]="defectFilterEntity.priority">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e"><span class='dot-web' [ngStyle]="{'background-color': setPriorityColor(e.priority)}"></span></mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedDefectColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedDefectColumns;"></mat-row>
+            </mat-table>
+
+            <mat-paginator #defectPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <!-- <button *ngIf='newInnerWidth >  500' class="btn" mat-button routerLink='/meldingen/createDefect'>Defect niet in de lijst</button> -->
+    </mat-tab>
+
+
+    <mat-tab label="Tasks">
+        <div *ngIf='newInnerWidth >  500' class="header">
+            <h2 class="headerText">Alle taken</h2>
+        </div>
+        <div class="export">
+            <i data-toggle="tooltip" data-placement="top" title="Export Data" class="fa fa-download exportIcon" (click)="exportTaken()"></i>
+        </div>
+        <br/>
+        <div [hidden]='newInnerWidth <  500' class="mat-elevation-z8 mb-3 container">
+            <style>
+                .parentRow {
+                    background-color: rgb(255, 255, 255);
+                    border-radius: 2px;
+                    margin-bottom: 10px;
+                    margin: .5px;
+                    margin-bottom: 0.5px;
+                    margin-bottom: 10px;
+                    padding-left: 3px;
+                    padding-top: 5px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                }
+            </style>
+            <br/>
+            <mat-table matTableFilter [dataSource]="taskDataSource" [exampleEntity]="taskFilterEntity" [filterType]="filterType">
+
+                <!-- Title Column -->
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Titel" [(ngModel)]="taskFilterEntity.title">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let f">{{f.title}}</mat-cell>
+                </ng-container>
+
+
+                <!-- Campus Column -->
+                <ng-container matColumnDef="campus">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Campus" [(ngModel)]="taskFilterEntity.campus">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let f">{{f.campus}}</mat-cell>
+                </ng-container>
+
+                <!-- Location Column -->
+                <ng-container matColumnDef="location">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Lokaal" [(ngModel)]="taskFilterEntity.location">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let f">{{f.location}}</mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Datum" [(ngModel)]="taskFilterEntity.date">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let f">{{f.date}}</mat-cell>
+                </ng-container>
+
+                <!-- Time Column -->
+                <ng-container matColumnDef="time">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Tijd" [(ngModel)]="taskFilterEntity.time">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let f">{{f.time}}</mat-cell>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Status" [(ngModel)]="taskFilterEntity.status">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let f">{{f.status}}</mat-cell>
+                </ng-container>
+
+                <!-- Details Column -->
+                <ng-container matColumnDef="detail">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-form-field>
+                            <input matInput placeholder="Detail">
+                        </mat-form-field>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let e"><a [routerLink]="['/tasks/detail', e.id]"><i class="fa fa-info-circle detailsIcon"></i></a></mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedTaskColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedTaskColumns;"></mat-row>
+            </mat-table>
+
+            <mat-paginator #taskPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+
+
+
+
+<!-- Alleen op mobile -->
+<mat-tab-group [hidden]='newInnerWidth >  500' #tabGroup2 (selectedTabChange)="handleMatTabChange($event)">
+    <mat-tab label="Defecten">
+        <mat-form-field *ngIf='newInnerWidth <  500'>
+            <mat-label>Filter</mat-label>
+            <input matInput placeholder="zoek op locatie..." type="text" name="search" [(ngModel)]="searchText" autocomplete="off">
+        </mat-form-field>
+
+
+        <div [hidden]='newInnerWidth >  500'>
+            <div class="header-mobile">
+                <p>Alle meldingen</p>
+                <i class="ExportIcon-mobile" data-toggle="tooltip" data-placement="top" title="Export Data" class="fa fa-download" (click)="exportDefecten()"></i>
+            </div>
+            <mat-form-field class="dropsown">
+                <mat-label class="dropDownLable">Order By ....</mat-label>
+                <mat-select [(ngModel)]="sortBy" name="col">
+                    <mat-option *ngFor="let col of columnsToSort" [value]="col.value" (click)="SortBy()">
+                        {{col.viewValue}}
+                        <i class="fas fa-arrow-up sortPile" *ngIf="direction === 'asc'"></i>
+                        <i class="fas fa-arrow-down sortPile" *ngIf="direction === 'desc'"></i>
+
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div *ngFor='let report of reports | sortBy: direction:sortBy' class='card-view'>
+
+                <section class="img">
+                    <img *ngIf='report.bytes === null' class="col-md-6" src="../../assets/images/default.jpg" alt="image">
+                    <img *ngIf='report.bytes !== null' class="col-md-6" src="data:image/jpeg;base64,{{report.bytes}}" alt="image">
+                </section>
+
+                <section class="description">
+                    <div class='card-head'>
+                        <h5>{{(report.title.length > 18 ) ? (report.title | slice:0:18) + '..' : (report.title)}}</h5>
+                        <span class='dot-mobile' [ngStyle]="{'background-color': setPriorityColor(report.priority)}"></span>
+                    </div>
+                    <p class='loc'>{{report.campus}} {{report.location}}</p>
+                    <p>Status: {{(report.status.length > 10 ) ? (report.status | slice:0:14) + '..' : (report.status)}}</p>
+                    <label class="category">{{report.category}}</label>
+                </section>
+            </div>
+
+            <!-- <button *ngIf='newInnerWidth <  500' mat-button class="btn-mobile" routerLink='/meldingen/createDefect'>Defect niet in de lijst</button> -->
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Tasks">
+        <mat-form-field *ngIf='newInnerWidth <  500'>
+            <mat-label>Filter</mat-label>
+            <input matInput placeholder="zoek op locatie..." type="text" name="search" [(ngModel)]="searchText" autocomplete="off">
+        </mat-form-field>
+
+        <div [hidden]='newInnerWidth >  500'>
+            <div class="header-mobile">
+                <p>Alle tasks</p>
+                <i class="ExportIcon-mobile" data-toggle="tooltip" data-placement="top" title="Export Data" class="fa fa-download exportIcon" (click)="exportTaken()"></i>
+            </div>
+
+            <mat-form-field class="dropsown">
+                <mat-label class="dropDownLable">Order By ....</mat-label>
+                <mat-select [(ngModel)]="TasksortBy" name="col">
+                    <mat-option *ngFor="let col of TaskscolumnsToSort" [value]="col.value" (click)="SortBy()">
+                        {{col.viewValue}}
+                        <i class="fas fa-arrow-up sortPile" *ngIf="direction === 'asc'"></i>
+                        <i class="fas fa-arrow-down sortPile" *ngIf="direction === 'desc'"></i>
+
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <br/>
+            <div *ngFor='let order of orders| filter:searchText | sortBy: direction:TasksortBy' class="row parentRow">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-9" style="padding: 0%;">
+                                    <h5 class="title"><b>{{ (order.title.length > 30 ) ? (order.title | slice:0:30)+'..':(order.title)}}</b></h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label><b>Campus</b>  : {{order.campus}}  {{order.location}}</label>
+                            </div>
+                            <div class="row">
+                                <label><b>Datum</b>  : {{order.date}} om {{order.time}} uur</label>
+                            </div>
+                            <div class="row ">
+                                <p><b>Status</b> : {{ (order.status.length > 35 ) ? (order.status | slice:0:35)+'..':(order.status)}}</p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <button *ngIf='newInnerWidth <  500' mat-button class="btn-mobile" routerLink='/tasks/createTask'>Create nieuwe task</button> -->
+        </div>
+
+    </mat-tab>
+</mat-tab-group>

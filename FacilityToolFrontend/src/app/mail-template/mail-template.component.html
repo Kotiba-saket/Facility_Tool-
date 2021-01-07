@@ -1,0 +1,14 @@
+<div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+  <div class="card-body">
+      <mat-card class="mail-card">
+        <form #templateForm="ngForm">
+          <div id="form-group" *ngFor="let template of templates">
+            <p class="template">{{template.firmName}}</p><br>
+            <p>{{template.body}}</p><br>
+            <p>{{template.hyperlink}}</p><br>
+            <p >{{template.signature}}</p>
+        </div>
+        </form>
+      </mat-card>
+  </div>
+</div>
